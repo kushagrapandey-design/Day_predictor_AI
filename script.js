@@ -8,19 +8,28 @@ function selectDay(button) {
   selectedDay = button.innerText;
 }
 
-function typeLine(text, delay) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function typeLine(text, duration = 1500) {
+  const consoleBox = document.getElementById("console");
+  consoleBox.innerHTML = ""; // clears previous line
+
+  let i = 0;
+  const typingSpeed = 30;
+
   return new Promise(resolve => {
-    const consoleBox = document.getElementById("console");
-    let i = 0;
     const interval = setInterval(() => {
-      consoleBox.innerHTML += text.charAt(i);
+      consoleBox.innerHTML =
+        text.substring(0, i) + '<span class="cursor">|</span>';
       i++;
-      if (i >= text.length) {
+
+      if (i > text.length) {
         clearInterval(interval);
-        consoleBox.innerHTML += "<br>";
-        setTimeout(resolve, delay);
+        setTimeout(resolve, duration);
       }
-    }, 40);
+    }, typingSpeed);
   });
 }
 
@@ -30,20 +39,23 @@ async function predict() {
     return;
   }
 
-  const consoleBox = document.getElementById("console");
   const result = document.getElementById("result");
-
-  consoleBox.innerHTML = "";
   result.innerHTML = "";
 
-  await typeLine("Initializing Quantum AI Engine...", 800);
-  await typeLine("Running DNA analysis...", 800);
-  await typeLine("Consulting Elon Musk...", 800);
-  await typeLine("Hacking NASA for data...", 800);
-  await typeLine("Calling Stephen Hawking...", 800);
-  await typeLine("Calculating with fingers...", 800);
-  await typeLine("Missed call received from Jaadu...", 800);
-  await typeLine("Finalizing prediction...", 1000);
+  const steps = [
+    "Initializing Quantum AI Engine...",
+    "Running DNA analysis...",
+    "Consulting Elon Musk...",
+    "Hacking NASA servers...",
+    "Calling Stephen Hawking...",
+    "Calculating with fingers...",
+    "Missed call from Jaadu...",
+    "Finalizing prediction..."
+  ];
+
+  for (let step of steps) {
+    await typeLine(step, 1200);
+  }
 
   showResult();
 }
