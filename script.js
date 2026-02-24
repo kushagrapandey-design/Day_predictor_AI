@@ -12,49 +12,39 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function typeLine(text, duration = 1500) {
-  const consoleBox = document.getElementById("console");
-  consoleBox.innerHTML = ""; // clears previous line
-
-  let i = 0;
-  const typingSpeed = 30;
-
-  return new Promise(resolve => {
-    const interval = setInterval(() => {
-      consoleBox.innerHTML =
-        text.substring(0, i) + '<span class="cursor">|</span>';
-      i++;
-
-      if (i > text.length) {
-        clearInterval(interval);
-        setTimeout(resolve, duration);
-      }
-    }, typingSpeed);
-  });
-}
-
 async function predict() {
   if (!selectedDay) {
     alert("Select a day first!");
     return;
   }
 
+  const consoleBox = document.getElementById("console");
   const result = document.getElementById("result");
+  const progress = document.getElementById("progress");
+
+  consoleBox.innerHTML = "";
   result.innerHTML = "";
+  progress.style.width = "0%";
 
   const steps = [
-    "Initializing Quantum AI Engine...",
+    "Booting Quantum AI Core...",
     "Running DNA analysis...",
+    "Stealing satellite data... 3%",
+    "Stealing satellite data... 97%",
+    "Stealing satellite data... 3% (error)",
     "Consulting Elon Musk...",
-    "Hacking NASA servers...",
+    "Hacking NASA mainframe...",
     "Calling Stephen Hawking...",
     "Calculating with fingers...",
-    "Missed call from Jaadu...",
-    "Finalizing prediction..."
+    "Missed call received from Jaadu...",
+    "Encrypting brain signals...",
+    "Finalizing ultra prediction..."
   ];
 
-  for (let step of steps) {
-    await typeLine(step, 1200);
+  for (let i = 0; i < steps.length; i++) {
+    consoleBox.innerHTML = steps[i];
+    progress.style.width = ((i + 1) / steps.length) * 100 + "%";
+    await sleep(900);
   }
 
   showResult();
@@ -67,13 +57,17 @@ function showResult() {
   today.setDate(today.getDate() + 1);
   const realTomorrow = today.toLocaleString('en-us', { weekday: 'long' });
 
+  const randomIQ = Math.floor(Math.random() * 110) + 70;
+
   if (selectedDay === realTomorrow) {
     result.innerHTML =
-      `✅ YES! Tomorrow is ${realTomorrow}.<br>
-      Your IQ is higher than 99.7% of humanity 🧠🔥`;
+      `✅ CORRECT! Tomorrow is ${realTomorrow}.<br>
+      Your IQ is ${randomIQ}.<br>
+      You are smarter than 99.7% of humanity 🧠🔥`;
   } else {
     result.innerHTML =
-      `❌ Oops! You are wrong.<br>
-      Your IQ is below average 😭`;
+      `❌ WRONG! Tomorrow is ${realTomorrow}.<br>
+      Your IQ is ${randomIQ}.<br>
+      NASA has been notified 🚀`;
   }
 }
