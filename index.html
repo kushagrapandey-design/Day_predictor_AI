@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day Predictor AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+  <h1>Day Predictor AI</h1>
+  <p class="warning">Please kids stay away</p>
+
+  <h3>Tomorrow is which day?</h3>
+
+  <div class="buttons">
+    <button onclick="selectDay(this)">Monday</button>
+    <button onclick="selectDay(this)">Tuesday</button>
+    <button onclick="selectDay(this)">Wednesday</button>
+    <button onclick="selectDay(this)">Thursday</button>
+    <button onclick="selectDay(this)">Friday</button>
+    <button onclick="selectDay(this)">Saturday</button>
+    <button onclick="selectDay(this)">Sunday</button>
+  </div>
+
+  <button class="predict" onclick="predict()">PREDICT</button>
+
+  <div class="console" id="console"></div>
+  <div id="result"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
